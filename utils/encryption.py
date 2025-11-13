@@ -22,16 +22,15 @@ class CaesarEncryption:
 
 class FenceEncryption:
   @staticmethod
-  # def encrypt(text):
-  #   encrypted = [i for i in text if not text.indexof(i) %2 and i != ' '] + [i for i in text if text.index(i) %2 and i != ' ']
-  #   return ''.join(encrypted)
   def encrypt(text):
-    encrypted = ''
+    encrypted_1 = ''
+    encrypted_2 = ''
     for i, char in enumerate(text):
       if i%2 ==0:
-        encrypted += char
-      encrypted += char
-      return encrypted
+        encrypted_1 += char
+      else:
+        encrypted_2 += char
+    return encrypted_1+encrypted_2
 
   @staticmethod
   def decrypt(text):
@@ -44,9 +43,6 @@ class FenceEncryption:
       if l_1:
         decrypted += l_1.pop(0)
     return decrypted
-a = FenceEncryption()
 
-b = a.encrypt('moshewwew+')
-print(b)
 
 
