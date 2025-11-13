@@ -3,9 +3,11 @@ import os
 from utils.encryption import CaesarEncryption as caesar
 from utils.encryption import FenceEncryption as fence
 
+
 app = FastAPI()
 
-
+caesar_encryption = caesar()
+fence_encryption = fence()
 
 @app.get('/test/{name}')
 def add_name(name):
@@ -17,15 +19,18 @@ def add_name(name):
 
 @app.post('/caesar')
 def caesar(body :dict):
-  return {'encrypted_text' : body['text'][::-1]}
+  if body['mode'] == 'encrypt':
+    return {'encrypted_text' : caesar_encryption.encrypt(body['text'], body['offset'])}
+  if body['mode'] == 'decrypt':
+    return {'decrypted_text' : caesar_encryption.decrypt(body['text'], body['offset'])}
 
-@app.get('/fence/encrypt/{text}')
-def fence_encrypt(text: str) -> str:
-  return text[::-1]
+@app.get('/fence/encrypt')
+def fence_encrypt(text: str):
+  return {'encrypted_text' : fence_encryption.encrypt(text)}
 
-@app.post('/fence/decrypt/{text}')
+@app.post('/fence/decrypt')
 def fence_decrypt(text):
-  return text[::-1]
+  return {'decrypted_text' : fence_encryption.decrypt(text) }
 
 
 
