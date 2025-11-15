@@ -9,6 +9,10 @@ app = FastAPI()
 caesar_encryption = caesar()
 fence_encryption = fence()
 
+@app.get('/')
+def read_root():
+  return {"msg": "Hello World"}
+
 @app.get('/test/{name}')
 def add_name(name):
   if not os.path.isdir('data'):
@@ -28,9 +32,9 @@ def caesar(body :dict):
 def fence_encrypt(text: str):
   return {'encrypted_text' : fence_encryption.encrypt(text)}
 
-@app.post('/fence/decrypt')
-def fence_decrypt(text):
-  return {'decrypted_text' : fence_encryption.decrypt(text) }
+@app.get('/fence/decrypt')
+def fence_decrypt(text: str):
+  return {'decrypted_text' : fence_encryption.decrypt(text)}
 
 
 
